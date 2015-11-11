@@ -1,0 +1,14 @@
+//
+// Created by Kirill Kravinsky on 2015-11-10.
+//
+
+#ifndef TUTORIAL_CAMERA_CONFIG_H
+#define TUTORIAL_CAMERA_CONFIG_H
+
+/**
+ * These are for CMake
+ */
+#define PROJECT_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}"
+#define PROJECT_VERSION_MINOR "${PROJECT_VERSION_MINOR}"
+
+#endif //TUTORIAL_CAMERA_CONFIG_H
