@@ -5,8 +5,8 @@
 //  Author: Kirill "ori0n" Kravinsky 2015
 //
 
-#define  GLFW_INCLUDE_GLU
-#define  GLFW_DLL
+//#define  GLFW_INCLUDE_GLU
+
 
 #include <stdio.h>
 #include <assert.h>

@@ -19,18 +19,41 @@ set(SOURCE_FILES src/main.cpp src/config.h.in)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
-find_package(PkgConfig REQUIRED)
 
-pkg_search_module(GLFW REQUIRED glfw3)
-include_directories(${GLFW_INCLUDE_DIRS})
+#if (UNIX)
+#    find_package(PkgConfig REQUIRED)
+#    pkg_search_module(GLFW REQUIRED glfw3)
+#    include_directories(${GLFW_INCLUDE_DIRS})
+#
+#    pkg_search_module(GLEW REQUIRED glew)
+#    include_directories(${GLEW_INCLUDE_DIRS})
+#
+#    find_package(OpenGL REQUIRED)
+#    include_directories(${OPENGL_INCLUDE_DIRS})
+#endif (UNIX)
 
-pkg_search_module(GLEW REQUIRED glew)
-include_directories(${GLEW_INCLUDE_DIRS})
+#target_link_libraries(${PROJECT_NAME} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
 
-find_package(OpenGL REQUIRED)
-include_directories(${OPENGL_INCLUDE_DIRS})
+if (APPLE)
+    FIND_LIBRARY(IOKit_LIBRARY IOKit)
+    find_package(OpenGL REQUIRED)
+    #include_directories(${OPENGL_INCLUDE_DIRS})
+    FIND_LIBRARY(COCOA_LIBRARY Cocoa)
+    FIND_LIBRARY(CORE_VIDEO CoreVideo)
+endif (APPLE)
 
-target_link_libraries(${PROJECT_NAME} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
+add_subdirectory(${CMAKE_SOURCE_DIR}/lib/glfw-3.1.2)
+include_directories(${CMAKE_SOURCE_DIR}/lib/glfw-3.1.2/include)
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/lib/glew)
+include_directories(${CMAKE_SOURCE_DIR}/lib/glew/include)
+
+target_link_libraries(${PROJECT_NAME} glfw ${GLFW_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} glew ${GLEW_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${IOKit_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${COCOA_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${CORE_VIDEO})
 
 message(${CMAKE_SOURCE_DIR}/renderprogs)
 
